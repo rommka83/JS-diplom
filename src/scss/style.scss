@@ -1,0 +1,306 @@
+@import '_nulling-styles.scss';
+@import '_fonts.scss';
+@import '_variable.scss';
+
+.container {
+  margin: 0 auto;
+  padding-right: 50px;
+  padding-left: 50px;
+}
+.btn {
+  border-radius: 7px;
+  font-family: 'Ubuntu', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+}
+.btn_white {
+  padding: 14px 24px;
+  background: $white;
+  border: 2px solid $primary;
+  color: $primary;
+}
+.btn_white:hover,
+.btn_white:focus {
+  background: linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.6),
+      rgba(255, 255, 255, 0.6)
+    ),
+    $primary;
+}
+.btn_white:active {
+  background: linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.8),
+      rgba(255, 255, 255, 0.8)
+    ),
+    $primary;
+  border: 2px solid $primary;
+}
+.btn_white:disabled {
+  opacity: 0.5;
+  border: 1px solid $gray5;
+  color: $gray5;
+}
+
+.btn_primary {
+  padding: 14px 21px;
+  background: $primary;
+  line-height: 20px;
+  color: $white;
+}
+.btn_primary:hover,
+.btn_primary:focus {
+  background: linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.3),
+      rgba(255, 255, 255, 0.3)
+    ),
+    $primary;
+}
+.btn_primary:active {
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
+    $primary;
+}
+.btn_primary:disabled {
+  background: $gray5;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 100px;
+  background-color: $primary;
+  box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.25);
+}
+.logo {
+  font-family: 'Work Sans', sans-serif;
+  font-weight: 300;
+  font-size: 48px;
+  line-height: 56px;
+  color: $white;
+  cursor: pointer;
+}
+.blok-btn {
+  &__btn:not(:last-child) {
+    margin-right: 25px;
+  }
+}
+.account-login {
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  padding: 50px 85px 50px 40px;
+  width: 500px;
+  background: $gray7;
+  border-radius: 50px;
+  &__subtitle {
+    margin-bottom: 35px;
+    padding-left: 25px;
+    text-align: center;
+  }
+}
+.subtitle {
+  font-family: 'Work Sans', sans-serif;
+  font-weight: 700;
+  font-size: 34px;
+  line-height: 40px;
+  color: $black;
+}
+.acc-form {
+  display: flex;
+  flex-direction: column;
+  &__label {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 20px;
+    color: $black;
+  }
+  &__label:first-child {
+    margin-bottom: 25px;
+  }
+  &__label:nth-child(2) {
+    margin-bottom: 15px;
+  }
+  &__inp {
+    padding: 8px 10px 8px 16px;
+    margin-left: 18px;
+    min-width: 300px;
+    height: 44px;
+    background: $white;
+    border: 1px solid $gray5;
+    border-radius: 7px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+  }
+  &__inp_err {
+    border: 1px solid $error;
+    background: rgb(235, 87, 87, 0.1);
+    color: $error;
+  }
+  &__inp::placeholder {
+    color: $gray4;
+  }
+  &__error {
+    margin-bottom: 5px;
+    margin-left: 75px;
+    font-size: 14px;
+    color: $error;
+    opacity: 0;
+  }
+  &__btn {
+    margin-left: 75px;
+    width: fit-content;
+    font-size: 14px;
+  }
+}
+.main-header {
+  display: flex;
+  padding-top: 45px;
+  margin-bottom: 50px;
+  &__title {
+    margin-right: 35px;
+  }
+  &__btn {
+    position: relative;
+    margin-left: auto;
+    padding-left: 50px;
+  }
+  &__btn::before {
+    content: '+';
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    transform: translateY(-50%);
+    font-size: 32px;
+    font-weight: 200;
+  }
+}
+.dropdawn {
+  position: relative;
+  padding: 15px 16px;
+  width: 300px;
+  background: $white;
+  border: 1px solid $primary;
+  border-radius: 7px;
+  font-family: 'Ubuntu', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  color: $gray2;
+  cursor: pointer;
+  &__text {
+    position: relative;
+    pointer-events: none;
+  }
+  &__text::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 25px;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 5px 5px 0 5px;
+    border-color: #000000 transparent transparent transparent;
+  }
+  &__text-open::after {
+    transform: rotate(180deg);
+  }
+  &__list {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    display: none;
+    padding: 10px 16px;
+    width: 100%;
+    background: $white;
+    border: 1px solid $primary;
+    border-radius: 7px;
+    box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.25);
+    pointer-events: none;
+  }
+  &__list-active {
+    display: block;
+  }
+  &__item {
+    position: relative;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    pointer-events: all;
+  }
+  &__item-active::after {
+    content: '\2713';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 20px;
+    font-size: 20px;
+  }
+}
+.accounts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-gap: 50px;
+}
+.account {
+  display: grid;
+  grid-template-columns: minmax(160px, 246px) 110px;
+  grid-template-rows: 30px 30px 38px 14px;
+  padding: 22px;
+  width: fit-content;
+  background: $white;
+  box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.25);
+  border-radius: 9px;
+  &__title {
+    grid-column: 1 / span 2;
+    grid-row: 1;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 22px;
+    color: $secondary1;
+  }
+  &__balance {
+    grid-column: 1 / span 2;
+    grid-row: 2;
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    color: $secondary1;
+  }
+  &__transaction {
+    grid-column: 1;
+    grid-row: 3;
+    align-self: end;
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 15px;
+    color: $black;
+  }
+  &__transaction-content {
+    grid-column: 1;
+    grid-row: 4;
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 15px;
+    color: $black;
+  }
+  &__btn {
+    grid-column: 2;
+    grid-row: 3 / span 2;
+  }
+}
