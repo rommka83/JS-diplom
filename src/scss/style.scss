@@ -112,7 +112,7 @@
   line-height: 40px;
   color: $black;
 }
-.acc-form {
+.form {
   display: flex;
   flex-direction: column;
   &__label {
@@ -133,7 +133,7 @@
   }
   &__inp {
     padding: 8px 10px 8px 16px;
-    margin-left: 18px;
+    margin-left: 10px;
     min-width: 300px;
     height: 44px;
     background: $white;
@@ -159,9 +159,13 @@
     opacity: 0;
   }
   &__btn {
-    margin-left: 75px;
     width: fit-content;
     font-size: 14px;
+  }
+}
+.acc-form {
+  &__btn {
+    margin-left: 75px;
   }
 }
 .main-header {
@@ -176,16 +180,17 @@
     margin-left: auto;
     padding-left: 50px;
   }
-  &__btn::before {
-    content: '+';
-    position: absolute;
-    top: 50%;
-    left: 15px;
-    transform: translateY(-50%);
-    font-size: 32px;
-    font-weight: 200;
-  }
 }
+.main-header__btn::before {
+  content: '+';
+  position: absolute;
+  top: 50%;
+  left: 15px;
+  transform: translateY(-50%);
+  font-size: 32px;
+  font-weight: 200;
+}
+
 .dropdawn {
   position: relative;
   padding: 15px 16px;
@@ -280,6 +285,9 @@
     line-height: 20px;
     color: $secondary1;
   }
+  &__balance::after {
+    content: '\20BD';
+  }
   &__transaction {
     grid-column: 1;
     grid-row: 3;
@@ -304,3 +312,4 @@
     grid-row: 3 / span 2;
   }
 }
+@import '_detaling.scss';

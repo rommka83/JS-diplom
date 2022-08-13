@@ -1,0 +1,204 @@
+.main-header_detaling {
+  justify-content: space-between;
+}
+.main-header__number {
+  margin-top: 30px;
+  font-family: 'Work Sans', sans-serif;
+  font-weight: 400;
+  font-size: 34px;
+  line-height: 40px;
+  color: $black;
+}
+.main-header__number::before {
+  content: '\2116 ';
+}
+.auxiliaryBlock {
+  width: 15%;
+}
+.main-header__btn_detaling {
+  margin-bottom: 33px;
+  width: 100%;
+}
+.main-header__btn_detaling::before {
+  content: '\2190';
+  transform: translateY(-55%);
+  font-size: 25px;
+}
+.auxiliaryBlock__title {
+  display: inline-block;
+  width: 40%;
+  text-align: start;
+}
+.balance {
+  display: inline-block;
+  width: 60%;
+  text-align: end;
+  font-family: 'Work Sans', sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 23px;
+  color: $black;
+}
+.balance::after {
+  content: '\20BD';
+}
+.detaling {
+  display: grid;
+  grid-template-columns: 606px 1fr;
+  grid-template-rows: auto auto;
+  grid-gap: 50px;
+}
+.detailing-title {
+  margin-bottom: 25px;
+  font-family: 'Work Sans', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 23px;
+  color: $black;
+}
+.detaling__article {
+  padding: 25px 50px;
+  border-radius: 50px;
+}
+.detaling__article_gray {
+  background: $gray7;
+}
+.detaling__article_white {
+  background: $white;
+  box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.25);
+}
+
+.new-translation {
+  grid-column: 1;
+  grid-row: 1;
+}
+.new-translation_off {
+  display: none;
+}
+.detailing-form__btn {
+  margin-left: 205px;
+}
+.balance-dynamics {
+  grid-column: 2;
+  grid-row: 1;
+}
+.balance-chart {
+  cursor: pointer;
+}
+.chart-off {
+  display: none;
+}
+.balance-ratio {
+  display: none;
+  grid-column: 1 / span 2;
+  grid-row: 2;
+}
+.translation-history {
+  grid-column: 1 / span 2;
+  grid-row: 2;
+}
+.history-table {
+  width: 100%;
+  border-spacing: 0;
+  text-align: left;
+  cursor: pointer;
+
+  &__row-head {
+    background: $primary;
+  }
+  &__row {
+    pointer-events: none;
+  }
+  &__th {
+    padding: 20px 0 20px 50px;
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 24px;
+    color: $white;
+  }
+  &__th-left {
+    width: 310px;
+    border-radius: 15px 0 0 15px;
+  }
+  &__th-right {
+    border-radius: 0 15px 15px 0;
+  }
+  &__td {
+    border-bottom: 2px solid rgba(0, 82, 255, 0.1);
+    padding: 20px 0 20px 50px;
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: $gray2;
+  }
+}
+.th2 {
+  width: 310px;
+}
+.th3 {
+  width: 250px;
+}
+.amount::after {
+  content: '\20BD';
+  margin-left: 5px;
+}
+.amount_red {
+  color: $secondary4;
+}
+.amount_green {
+  color: #76ca66;
+}
+.amount_red::before {
+  content: '\002D';
+  margin-right: 5px;
+}
+.amount_green::before {
+  content: '\002B';
+  margin-right: 5px;
+}
+.transaction-block-btn {
+  position: fixed;
+  display: none;
+  justify-content: space-around;
+  align-items: center;
+  right: 0;
+  bottom: 10%;
+  width: 150px;
+  height: 100px;
+}
+.transaction-block-btn-active {
+  display: flex;
+}
+.transaction-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: $primary;
+  box-shadow: 0px 0px 5px 2px;
+}
+.transaction-btn:active {
+  box-shadow: none;
+}
+.transaction-btn:disabled {
+  background-color: rgba(17, 106, 204, 0.5);
+}
+
+.transaction-btn-back {
+  width: 10px;
+  height: 10px;
+  transform: rotate(-45deg);
+  border-top: 2px solid #fff;
+  border-left: 2px solid #fff;
+}
+.transaction-btn-forward {
+  width: 10px;
+  height: 10px;
+  transform: rotate(-45deg);
+  border-right: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+}

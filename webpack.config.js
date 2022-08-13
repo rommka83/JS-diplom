@@ -32,6 +32,10 @@ module.exports = (env) => ({
         },
       },
       {
+        test: /\.js$/,
+        loader: 'ify-loader',
+      },
+      {
         test: /\.scss$/i,
         use: [
           env.prod ? MiniCssExtractPlugin.loader : 'style-loader',

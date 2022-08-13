@@ -25,6 +25,8 @@
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",
+    "ify-loader": "^1.1.0",
+    "imask": "^6.4.2",
     "navigo": "^8.11.1",
     "redom": "^3.29.0"
   }
