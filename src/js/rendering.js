@@ -52,10 +52,10 @@ function renderingAccountLogin() {
 //   отрисовка блока кнопок шапки
 function renderingHeaderBlokButton() {
   const blokBtn = el('.header__blok-btn.blok-btn', [
-    el('button.blok-btn__btn.btn.btn_white', 'Банкоматы'),
-    el('button.blok-btn__btn.btn.btn_white', 'Счета'),
-    el('button.blok-btn__btn.btn.btn_white', 'Валюта'),
-    el('button.blok-btn__btn.btn.btn_white', 'Выйти'),
+    el('button.blok-btn__btn.btn.btn_white.cash-machine', 'Банкоматы'),
+    el('button.blok-btn__btn.btn.btn_white.btn-accounts', 'Счета'),
+    el('button.blok-btn__btn.btn.btn_white.btn-cyrrency', 'Валюта'),
+    el('button.blok-btn__btn.btn.btn_white.output', 'Выйти'),
   ]);
   mount(header, blokBtn);
 }
@@ -64,9 +64,9 @@ function renderMainPageOfPersonalAccount(arr) {
   const mainBody = document.querySelector('main');
   const mainHeder = el('.main-header', [
     el('h2.subtitle.main-header__title', 'Ваши счета'),
-    el('.main-header__select.dropdawn', [
-      el('p.dropdawn__text', 'Сортировка'),
-      el('ul.dropdawn__list', [
+    el('.main-header__select.dropdawn.dropdawn_primary', { 'data-as': 'sort' }, [
+      el('p.dropdawn__text', { 'data-drt': 'sort' }, 'Сортировка'),
+      el('ul.dropdawn__list', { 'data-drl': 'sort' }, [
         el('li.dropdawn__item', 'По номеру'),
         el('li.dropdawn__item', 'По балансу'),
         el('li.dropdawn__item', 'По последней транзакции'),
@@ -292,6 +292,201 @@ function accountDetailsRendering(res, arr, id, balance) {
   // renderingEdgeTransactionTable(arr);
   // transactionColor(id);
 }
+//   отрисовка валютной страницы
+function currencyPageRendering() {
+  const mainHeder = el('.main-header.main-header_currency', [
+    el('h2.subtitle.main-header__title', 'Валютный обмен'),
+  ]);
+  const currency = el('.currency', [
+    el('article.detaling__article.detaling__article_white.my-currency', [
+      el('h3.detailing-title', 'Ваши валюты'),
+      el('ul.my-currency-list'),
+    ]),
+    el('article.detaling__article.detaling__article_white.exchange-currency', [
+      el('h3.detailing-title', 'Обмен валюты'),
+      el('form.exchange', [
+        el('label.exchange__span.exchange__span_from', 'Из', el('.exchange__select.dropdawn.dropdawn_grey', { 'data-as': 'from' }, [
+          el('p.dropdawn__text.dropdawn__text_exchange', { 'data-drt': 'from' },),
+          el('ul.dropdawn__list.dropdawn-exchange', { 'data-drl': 'from' },),
+        ])),
+        el('label.exchange__span..exchange__span_to', 'в', el('.exchange__select.dropdawn.dropdawn_grey', { 'data-as': 'to' }, [
+          el('p.dropdawn__text.dropdawn__text_exchange', { 'data-drt': 'to' }),
+          el('ul.dropdawn__list.dropdawn-exchange', { 'data-drl': 'to' }),
+        ])),
+        el('label.exchange__span.exchange__span_amount', 'Сумма', [el('input.exchange__inp'),]),
+        el('button.button.btn.btn_primary.exchange__btn', { 'disabled': 'disabled' }, 'Обменять'),
+      ])
+    ]),
+    el('article.detaling__article.detaling__article_gray.changes-currency', [
+      el('h3.detailing-title', 'Изменение курсов в реальном времени'),
+      el('ul.changes-currency-list'),
+    ]),
+  ]);
+  setChildren(main, [mainHeder, currency]);
+}
+//   добавляю имеющиеся валютные счета пользователя в список
+function fillingTheListOfUserCurrencies(res) {
+  const myCurrencyList = document.querySelector('.my-currency-list');
+  let arr = [];
+  for (let r in res) {
+    arr.push(res[r]);
+  };
+  arr = arr.filter(el => el.amount != 0);
+  arr.forEach(elem => {
+    const myCurrencyItem = el('li.my-currency-item', [
+      el('span.current-name', `${elem.code}`),
+      el('.current-line'),
+      el('span.current-name.current-amount', `${elem.amount}`),
+    ]);
+    mount(myCurrencyList, myCurrencyItem);
+  });
+}
+//   отрисовка изменения курсов валют
+function drawingChangesInExchangeRates() {
+  let exchangeRateChanges = [
+    {
+      "type": "EXCHANGE_RATE_CHANGE",
+      "from": "BTC",
+      "to": "ETH",
+      "rate": 6.3123545131,
+      "change": 1
+    },
+    {
+      "type": "EXCHANGE_RATE_CHANGE",
+      "from": "NZD",
+      "to": "CHF",
+      "rate": 62.79,
+      "change": -1
+    }, {
+      "type": "EXCHANGE_RATE_CHANGE",
+      "from": "NZD",
+      "to": "CHF",
+      "rate": 62.79,
+      "change": -1
+    }, {
+      "type": "EXCHANGE_RATE_CHANGE",
+      "from": "BTC",
+      "to": "ETH",
+      "rate": 6.3123545131,
+      "change": 0
+    },
+    {
+      "type": "EXCHANGE_RATE_CHANGE",
+      "from": "BTC",
+      "to": "ETH",
+      "rate": 6.3123545131,
+      "change": 1
+    },
+    {
+      "type": "EXCHANGE_RATE_CHANGE",
+      "from": "BTC",
+      "to": "ETH",
+      "rate": 6.3123545131,
+      "change": 1
+    },
+    {
+      "type": "EXCHANGE_RATE_CHANGE",
+      "from": "BTC",
+      "to": "ETH",
+      "rate": 6.3123545131,
+      "change": 1
+    },
+    {
+      "type": "EXCHANGE_RATE_CHANGE",
+      "from": "BTC",
+      "to": "ETH",
+      "rate": 6.3123545131,
+      "change": 1
+    },
+    {
+      "type": "EXCHANGE_RATE_CHANGE",
+      "from": "NZD",
+      "to": "CHF",
+      "rate": 62.79,
+      "change": -1
+    }, {
+      "type": "EXCHANGE_RATE_CHANGE",
+      "from": "NZD",
+      "to": "CHF",
+      "rate": 62.79,
+      "change": -1
+    }, {
+      "type": "EXCHANGE_RATE_CHANGE",
+      "from": "BTC",
+      "to": "ETH",
+      "rate": 6.3123545131,
+      "change": 0
+    },
+    {
+      "type": "EXCHANGE_RATE_CHANGE",
+      "from": "BTC",
+      "to": "ETH",
+      "rate": 6.3123545131,
+      "change": 1
+    },
+    {
+      "type": "EXCHANGE_RATE_CHANGE",
+      "from": "BTC",
+      "to": "ETH",
+      "rate": 6.3123545131,
+      "change": 1
+    },
+    {
+      "type": "EXCHANGE_RATE_CHANGE",
+      "from": "BTC",
+      "to": "ETH",
+      "rate": 6.3123545131,
+      "change": 1
+    },
+
+  ];
+  let change;
+
+  const changesCurrency = document.querySelector('.changes-currency-list');
+  exchangeRateChanges.forEach(elem => {
+    if (elem.change === 1) {
+      change = 'promotion';
+    } else if (elem.change === -1) {
+      change = 'downgrade';
+    } else {
+      change = 'unaltered';
+    }
+    const exchangeКateСhangesItem = el('li.my-currency-item', [
+      el('span.current-name', `${elem.from}/${elem.to}`),
+      el('span.current-line'),
+      el('span.current-name.current-amount', `${elem.rate}`),
+      el(`span.triangle.${change}`)
+    ]);
+    mount(changesCurrency, exchangeКateСhangesItem);
+  });
+}
+//   добавляю список достпуных к обмену валют
+function exchangeList(res) {
+  const dropdawnExchange = document.querySelectorAll('.dropdawn-exchange');
+  const dropdawnTextExchange = document.querySelectorAll('.dropdawn__text_exchange');
+  dropdawnExchange.forEach(el => {
+    res.forEach(elem => {
+      el.innerHTML += `<li class="dropdawn__item">${elem}</li>`;
+    });
+  });
+  dropdawnTextExchange.forEach(el => {
+    el.textContent = res[0];
+  });
+
+  // <li class="dropdawn__item">AAA</li>
+
+
+
+}
+//   отрисовка страницы с картой банкоматов
+function mapPageRendering() {
+  const mainBody = document.querySelector('main');
+  const mainHeder = el('.main-header', el('h2.subtitle.main-header__title', 'Карта банкоматов'));
+  const map = el('.my-map#map', {
+    // style: { width: '200px', height: '200px' }
+  });
+  setChildren(mainBody, [mainHeder, map]);
+}
 export {
   start,
   renderingHeaderBlokButton,
@@ -299,5 +494,10 @@ export {
   renderMainPageOfPersonalAccount,
   accountDetailsRendering,
   renderingEdgeTransactionTable,
-  TransactionTableClear
+  TransactionTableClear,
+  currencyPageRendering,
+  fillingTheListOfUserCurrencies,
+  drawingChangesInExchangeRates,
+  exchangeList,
+  mapPageRendering
 };

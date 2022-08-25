@@ -1,0 +1,104 @@
+.currency {
+  display: grid;
+  grid-template-columns: 590px auto;
+  grid-template-rows: repeat(2, auto);
+  grid-gap: 45px;
+}
+.my-currency {
+  grid-column: 1;
+  grid-row: 1;
+}
+.exchange-currency {
+  grid-column: 1;
+  grid-row: 2;
+}
+.exchange {
+  display: grid;
+  grid-template-columns: 0.4fr 0.4fr 0.2fr;
+  grid-template-rows: repeat(3, auto);
+  gap: 25px;
+}
+.exchange__span {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.exchange__span_from {
+  grid-column: 1;
+  grid-row: 1;
+}
+.exchange__span_to {
+  grid-column: 2;
+  grid-row: 1;
+}
+.exchange__span_amount {
+  grid-column: 1 / span 2;
+  grid-row: 2;
+}
+.exchange__btn {
+  grid-column: 3;
+  grid-row: 1 / span 2;
+}
+.exchange__select {
+  width: 135px;
+  margin-left: 15px;
+}
+.exchange__inp {
+  width: -webkit-fill-available;
+  margin-left: 15px;
+  padding: 8px 16px;
+  height: 44px;
+  background: $white;
+  border: 1px solid $gray5;
+  border-radius: 7px;
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: -0.01em;
+  color: $black;
+}
+.changes-currency {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+}
+
+.my-currency-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.my-currency-item:not(:last-child) {
+  margin-bottom: 25px;
+}
+.current-name {
+  font-family: Work Sans;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 23px;
+  letter-spacing: 0.1em;
+  color: $black;
+}
+.current-line {
+  width: -webkit-fill-available;
+  margin-left: 10px;
+  margin-right: 10px;
+  border-bottom: 1px dotted black;
+}
+.triangle {
+  width: 0;
+  height: 0;
+  margin-left: 5px;
+  border-style: solid;
+}
+.promotion {
+  border-width: 10px 10px 0 10px;
+  border-color: #76ca66 transparent transparent transparent;
+}
+.downgrade {
+  border-width: 0 10px 10px 10px;
+  border-color: transparent transparent #fd4e5d transparent;
+}
+.unaltered {
+  border-width: 10px 10px 10px 10px;
+  border-color: transparent transparent transparent transparent;
+}

@@ -7,6 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coin</title>
     <script defer src="/dist/main.js"></script>
+    <script defer src="https://api-maps.yandex.ru/2.1/?apikey=ваш API-ключ&lang=ru_RU" type="text/javascript">
+    </script>
   </head>
 
   <body>
@@ -14,5 +16,13 @@
 
 
   </body>
+  <script type="text/javascript">
+    ymaps.ready(function () {
+      var myMap = new ymaps.Map("map", {
+        center: [55.76, 37.64],
+        zoom: 10
+      });
+    });
+  </script>
 
 </html>

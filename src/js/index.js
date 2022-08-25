@@ -5,6 +5,7 @@ import {
   formValidation,
   sorting,
   validationOfAnewTransaction,
+  currencyExchangeFormValidation,
 } from './logic-functions';
 import {
   start,
@@ -13,8 +14,14 @@ import {
   renderMainPageOfPersonalAccount,
   accountDetailsRendering,
   renderingEdgeTransactionTable,
-  TransactionTableClear
+  TransactionTableClear,
+  currencyPageRendering,
+  fillingTheListOfUserCurrencies,
+  drawingChangesInExchangeRates,
+  exchangeList,
+  mapPageRendering,
 } from './rendering';
+import mapWidjet from 'yandex-map-widget';
 
 const body = document.querySelector('body');
 let arrayWorking = [];
@@ -31,10 +38,7 @@ function officeEntryRequest() {
     })
     .then((res) => {
       arrayWorking = res.payload;
-      return arrayWorking;
-    })
-    .then((res) => {
-      renderMainPageOfPersonalAccount(res);
+      renderMainPageOfPersonalAccount(arrayWorking);
     });
 }
 //   запрос на детализацию счёта
@@ -61,12 +65,76 @@ function detailRequest(id, balance) {
 }
 //   вход в кабинет
 function entranceToTheOffice() {
-  const entryBtn = document.querySelector('.acc-form__btn');
   formValidation();
-  entryBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    officeEntryRequest();
-    renderingHeaderBlokButton();
+  body.addEventListener('click', (event) => {
+    event.preventDefault();
+    if (event.target.className === 'acc-form__btn btn btn_primary form__btn') {
+      officeEntryRequest();
+      renderingHeaderBlokButton();
+    } else if (event.target.className === 'blok-btn__btn btn btn_white btn-accounts') {
+      officeEntryRequest();
+    }
+  });
+}
+//   сортировка счетов
+function accountsSort() {
+  body.addEventListener('click', (event) => {
+    if (event.target.className === 'main-header__select dropdawn dropdawn_primary') {
+      let items = document.querySelectorAll('.dropdawn__item');
+      items.forEach(el => {
+        el.addEventListener('click', () => {
+          if (el.textContent === 'По номеру') {
+            arrayWorking.sort((a, b) => a.account > b.account ? 1 : -1);
+            renderMainPageOfPersonalAccount(arrayWorking);
+          }
+          if (el.textContent === 'По балансу') {
+            arrayWorking.sort((a, b) => a.balance > b.balance ? 1 : -1);
+            console.log(arrayWorking);
+            renderMainPageOfPersonalAccount(arrayWorking);
+          }
+          if (el.textContent === 'По последней транзакции') {
+            let arr = arrayWorking.filter(el => el.transactions[0]);
+            arr.sort((a, b) => a.transactions[0].date > b.transactions[0].date ? 1 : -1);
+            renderMainPageOfPersonalAccount(arr);
+          }
+        });
+      });
+    }
+  });
+}
+//   выход из кабинета
+function output() {
+  body.addEventListener('click', (event) => {
+    if (event.target.className === 'blok-btn__btn btn btn_white output') {
+      location.reload();
+    }
+  });
+}
+//   вход на страницу с банкоматами
+function cashMachine() {
+  body.addEventListener('click', (event) => {
+    if (event.target.className === 'blok-btn__btn btn btn_white cash-machine') {
+      fetch(`http://localhost:3000/banks`, {
+        headers: {
+          'Content-Type': 'text/plain',
+          Authorization: 'Basic ZGV2ZWxvcGVyOnNraWxsYm94',
+        },
+      })
+        .then((res) => {
+          return res.json();
+        })
+        .then((obj) => {
+          return obj.payload;
+        })
+        .then((res) => {
+          mapPageRendering();
+          mapWidjet.loadApi()
+            .then(() => {
+              mapWidjet.createMap('map',
+                res);
+            });
+        });
+    }
   });
 }
 //   добавление счёта
@@ -206,8 +274,97 @@ function enterTheDetailedViewOfTheBalanceHistory() {
     }
   });
 }
+//   вход на валютную страницу
+function entranceToTheCurrencyPage() {
+  body.addEventListener('click', (event) => {
+    if (event.target.className === 'blok-btn__btn btn btn_white btn-cyrrency') {
+      fetch(`http://localhost:3000/currencies`, {
+        headers: {
+          'Content-Type': 'text/plain',
+          Authorization: 'Basic ZGV2ZWxvcGVyOnNraWxsYm94',
+        },
+      })
+        .then((res) => {
+          return res.json();
+        })
+        .then((obj) => {
+          return obj.payload;
+        })
+        .then((res) => {
+          currencyPageRendering();
+          fillingTheListOfUserCurrencies(res);
+          drawingChangesInExchangeRates();
+        }).then(() => {
+          fetch(`http://localhost:3000/all-currencies`, {
+            headers: {
+              'Content-Type': 'text/plain',
+              Authorization: 'Basic ZGV2ZWxvcGVyOnNraWxsYm94',
+            },
+          }).then((res) => {
+            return res.json();
+          })
+            .then((obj) => {
+              return obj.payload;
+            }).then((res) => {
+              exchangeList(res);
+              currencyExchangeFormValidation();
+            });
+        });
+    }
+  });
+}
+//   запрос на обмен валют (на все запросы ответ с ошибкой `Unknown currency code`)
+function currencyExchangeRequest() {
+  body.addEventListener('click', (event) => {
+    event.preventDefault();
+    if (event.target.className === 'button btn btn_primary exchange__btn') {
+      const dropdawnText = document.querySelectorAll('.dropdawn__text');
+      const from = dropdawnText[0].textContent;
+      const to = dropdawnText[1].textContent;
+      const amount = document.querySelector('.exchange__inp').value;
+      let obj = {
+        from: from,
+        to: to,
+        amount: amount
+      };
+      fetch(`http://localhost:3000/currency-buy`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'text/plain',
+          Authorization: 'Basic ZGV2ZWxvcGVyOnNraWxsYm94',
+        },
+        body: JSON.stringify(obj),
+      }).then((res) => {
+        return res.json();
+      })
+        .then((obj) => {
+          return obj.payload;
+        });;
+    }
+  });
+}
+//   запрос на изменение курсов валют (закрывается сразу после открытия, ответа нет)
+// function websoc() {
+//   const ws = new WebSocket("ws://localhost:3000/WebSocket/currency-feed");
+//   ws.onopen = () => {
+//     console.log('open');
+//   };
+//   ws.onmessage = (event) => {
+//     console.log(event.data);
+//   };
+//   ws.onclose = () => {
+//     console.log('close');
+//   };
+//   ws.onerror = () => {
+//     console.log('error');
+//   };
+// }
+// websoc();
+
 
 start();
+output();
+cashMachine();
 renderingAccountLogin();
 entranceToTheOffice();
 sorting();
@@ -216,4 +373,6 @@ newTransaction();
 accountDetails();
 enterTheDetailedViewOfTheBalanceHistory();
 comeBack();
-
+entranceToTheCurrencyPage();
+currencyExchangeRequest();
+accountsSort();

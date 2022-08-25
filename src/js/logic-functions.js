@@ -10,7 +10,7 @@ function formValidation() {
   const password = document.getElementById('password');
   const sample = /[^\s.]{6}/i;
   const errMessage = document.querySelector('.acc-form__error');
-  login.addEventListener('blur', () => {
+  login.addEventListener('keyup', () => {
     if (sample.test(login.value) === false) {
       login.classList.add('acc-form__inp_err');
       errMessage.textContent =
@@ -27,7 +27,7 @@ function formValidation() {
     login.classList.remove('acc-form__inp_err');
     errMessage.style.opacity = '0';
   });
-  password.addEventListener('blur', () => {
+  password.addEventListener('keyup', () => {
     if (sample.test(password.value) === false) {
       password.classList.add('acc-form__inp_err');
       errMessage.textContent =
@@ -74,21 +74,30 @@ function sorting() {
   let dropdawnItems;
   //   открыл список, назначил тип сортировки
   body.addEventListener('click', (event) => {
-    dropdawnText = document.querySelector('.dropdawn__text');
-    dropdawnList = document.querySelector('.dropdawn__list');
+    dropdawnText = document.querySelectorAll('.dropdawn__text');
+    dropdawnList = document.querySelectorAll('.dropdawn__list');
     dropdawnItems = document.querySelectorAll('.dropdawn__item');
-    if (event.target.className === 'main-header__select dropdawn') {
-      dropdawnList.classList.toggle('dropdawn__list-active');
-      dropdawnText.classList.toggle('dropdawn__text-open');
+
+    if (event.target.className === 'main-header__select dropdawn dropdawn_primary' || event.target.className === 'exchange__select dropdawn dropdawn_grey') {
+      dropdawnList.forEach(el => {
+        if (el.dataset.drl === event.target.dataset.as) {
+          el.classList.toggle('dropdawn__list-active');
+        }
+      });
+      dropdawnText.forEach(el => {
+        if (el.dataset.drt === event.target.dataset.as) {
+          el.classList.toggle('dropdawn__text-open');
+        }
+      });
     }
     if (event.target.className === 'dropdawn__item') {
       dropdawnItems.forEach((el) => {
         el.classList.remove('dropdawn__item-active');
       });
       event.target.classList.add('dropdawn__item-active');
-      dropdawnText.textContent = event.target.textContent;
-      dropdawnList.classList.remove('dropdawn__list-active');
-      dropdawnText.classList.remove('dropdawn__text-open');
+      event.target.parentElement.parentElement.firstChild.textContent = event.target.textContent;
+      event.target.parentElement.classList.remove('dropdawn__list-active');
+      event.target.parentElement.parentElement.firstChild.classList.remove('dropdawn__text-open');
     }
   });
 }
@@ -182,7 +191,6 @@ function creatingAnArrayOfBalancesByMonth(arr, id, balance) {
         }
       }
     }
-    console.log('Исходный', arrayOfMonthlyBalances);
     //   массив месяцев разделяю на массивы по годам
     let current = [];
     let last = [];
@@ -569,14 +577,31 @@ function validationOfAnewTransaction() {
   const btn = document.querySelector('.detailing-form__btn');
   IMask(recipient, { mask: Number });
   IMask(amount, { mask: Number });
-  recipient.addEventListener('blur', () => {
+  recipient.addEventListener('keyup', () => {
     if (recipient.value && amount.value) {
       btn.removeAttribute('disabled');
+    } else if (!btn.hasAttribute('disabled')) {
+      btn.setAttribute('disabled', 'disabled');
     }
   });
-  amount.addEventListener('blur', () => {
+  amount.addEventListener('keyup', () => {
     if (recipient.value && amount.value) {
       btn.removeAttribute('disabled');
+    } else if (!btn.hasAttribute('disabled')) {
+      btn.setAttribute('disabled', 'disabled');
+    }
+  });
+}
+//   валидация формы обмена валют
+function currencyExchangeFormValidation() {
+  const exchangeInp = document.querySelector('.exchange__inp');
+  const exchangeBtn = document.querySelector('.exchange__btn');
+  IMask(exchangeInp, { mask: Number });
+  exchangeInp.addEventListener('blur', () => {
+    if (exchangeInp.value) {
+      exchangeBtn.removeAttribute('disabled');
+    } else if (!exchangeBtn.hasAttribute('disabled')) {
+      exchangeBtn.setAttribute('disabled', 'disabled');
     }
   });
 }
@@ -617,6 +642,7 @@ export {
   constructionBalanceChart,
   transactionColor,
   validationOfAnewTransaction,
+  currencyExchangeFormValidation,
   writeAccountNumberToLocalStorage,
   updatingAutocompleteListItems,
   constructionBalanceChartYear,

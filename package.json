@@ -4,6 +4,7 @@
     "@babel/preset-env": "^7.18.2",
     "babel-loader": "^8.2.5",
     "css-loader": "^6.7.1",
+    "cypress": "^10.6.0",
     "eslint": "^8.17.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
@@ -21,13 +22,15 @@
     "lint": "eslint ./",
     "lint:fix": "eslint ./ --fix",
     "build": "webpack --mode=production --env prod",
-    "dev": "webpack serve --mode=development"
+    "dev": "webpack serve --mode=development",
+    "cypress:open": "cypress open"
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",
     "ify-loader": "^1.1.0",
     "imask": "^6.4.2",
     "navigo": "^8.11.1",
-    "redom": "^3.29.0"
+    "redom": "^3.29.0",
+    "yandex-map-widget": "^1.0.2"
   }
 }
